@@ -1,0 +1,7 @@
+---
+- name: cisco playbook
+  hosts: lab
+  gather_facts: no
+
+  roles:
+    - facts_report
