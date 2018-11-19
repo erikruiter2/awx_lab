@@ -1,0 +1,12 @@
+---
+
+- name: Merging configuration parts
+  shell: cat /var/tmp/ansible/{{ inventory_hostname }}/*.part > /var/tmp/ansible/{{ inventory_hostname }}.conf
+  check_mode: no
+  changed_when: False
+
+- name: Pushing config ... please wait
+  ios_config:
+          #provider={{ provider }} 
+    src=/var/tmp/ansible/{{ inventory_hostname }}.conf
+    #diff_against=intended
