@@ -1,17 +1,10 @@
 ---
 - name: cisco Device provisioning
   hosts: lab
-  connection: local
+  connection: network_cli
   gather_facts: False
 
   pre_tasks:
-    - name: configure provider
-      set_fact:
-        provider:
-          username: ansible
-          password: ansible123
-          authorize: yes     # enable mode
-      run_once: True
     - name: Create target directory
       file: path=/var/tmp/ansible/{{ inventory_hostname }} state=directory mode=0755
       check_mode: no
