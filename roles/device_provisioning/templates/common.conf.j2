@@ -1,0 +1,12 @@
+hostname {{ inventory_hostname }}
+{% if snmp is defined and snmp is iterable %}
+{% for h in snmp -%}
+snmp-server host {{ h['server'] }} version {{ h['version'] }} {{ h['community'] }}
+{% endfor -%}
+{% endif %}
+{% if ntp is defined and ntp is iterable %}
+{% for h in ntp -%}
+ntp server {{ h['server'] }}
+{% endfor -%}
+{% endif %}
+

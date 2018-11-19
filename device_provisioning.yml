@@ -1,0 +1,30 @@
+---
+- name: cisco playbook
+  hosts: ams5
+  connection: local
+  gather_facts: False
+
+  pre_tasks:
+    - name: configure provider
+      set_fact:
+        provider:
+          username: ansible
+          password: ansible123
+          authorize: yes     # enable mode
+    - name: Create target directory
+      file: path=/var/tmp/ansible/{{ inventory_hostname }} state=directory mode=0755
+      check_mode: no
+      tags: always
+      changed_when: False
+  
+  roles:
+    - common settings
+    - vlans
+    - interfaces
+    - commmit
+
+#  - name: gather facts
+#    ios_facts:
+#      provider: "{{ provider }}"
+#      gather_subset: all
+

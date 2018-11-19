@@ -1,0 +1,13 @@
+---
+- name: Building common configuration
+  template: 
+    src=common.conf.j2
+    dest=/var/tmp/ansible/{{ inventory_hostname }}/common.conf.part
+  check_mode: no
+  changed_when: False
+
+#  - name: gather facts
+#    ios_facts:
+#      provider: "{{ provider }}"
+#      gather_subset: all
+
