@@ -18,10 +18,10 @@
       changed_when: False
   
   roles:
-    - common settings
-    - vlans
-    - interfaces
-    - commmit
+    - device_provisioning
+      #    - vlans
+      #- interfaces
+      #- commmit
 
 #  - name: gather facts
 #    ios_facts:
