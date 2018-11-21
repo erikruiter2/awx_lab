@@ -1,0 +1,8 @@
+---
+s11-iol:
+  - Ethernet0/0
+  - Ethernet0/1
+  - Ethernet0/2
+s12-iol: 
+  - Ethernet0/0
+

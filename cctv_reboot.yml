@@ -1,0 +1,48 @@
+---
+- name: Reboot CCTV hosts
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  pre_tasks:
+    - name: Load interfaces to be rebooted 
+      include_vars:
+        file: cctv_reboot_data.yml
+        name: cctv_reboot_data
+    - name: "Add hosts:"
+      add_host: 
+        name: "{{ item }}"  
+        group: cctv_hosts
+      with_items: "{{ cctv_reboot_data }}"
+
+
+- hosts: cctv_hosts
+  connection: network_cli
+  gather_facts: no
+
+  pre_tasks:
+    - name: Load interfaces to be rebooted
+      include_vars:
+        file: cctv_reboot_data.yml
+        name: cctv_reboot_data
+
+  tasks:
+    - name: set interfaces
+      set_fact: interfaces="{{ cctv_reboot_data[ansible_ssh_host] }}"
+    
+    - name: shut down interfaces
+      ios_config:
+        lines: shutdown
+        parents: interface {{ item }}
+      with_items: "{{ interfaces }}"
+
+    - name: Wait 10 seconds
+      pause: 
+        seconds: 10
+
+    - name: unshut interfaces
+      ios_config:
+        lines: no shutdown
+        parents: interface {{ item }}
+      with_items: "{{ interfaces }}"
+
